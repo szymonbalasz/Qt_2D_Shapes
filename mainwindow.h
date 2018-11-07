@@ -15,6 +15,9 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private:
+    void update_ui();
+
 private slots:
     void on_btnAstroid_clicked();
 
@@ -25,6 +28,12 @@ private slots:
     void on_btnHypo_clicked();
 
     void on_btnLine_clicked();
+
+    void on_spinScale_valueChanged(double scale);
+
+    void on_spinInterval_valueChanged(double arg1);
+
+    void on_spinCount_valueChanged(int arg1);
 
 private:
     Ui::MainWindow *ui;
