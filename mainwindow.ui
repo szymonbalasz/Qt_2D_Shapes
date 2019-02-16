@@ -30,6 +30,13 @@
       <item row="1" column="0">
        <layout class="QHBoxLayout" name="horizontalLayout_4">
         <item>
+         <widget class="QPushButton" name="btnAnimate">
+          <property name="text">
+           <string>Animate</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QPushButton" name="btnBackground">
           <property name="text">
            <string>Background</string>
@@ -104,6 +111,34 @@
        </widget>
       </item>
       <item>
+       <widget class="QPushButton" name="btnCircle">
+        <property name="text">
+         <string>Circle</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnEllipse">
+        <property name="text">
+         <string>Ellipse</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnTwirly">
+        <property name="text">
+         <string>Twirly</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnStarfish">
+        <property name="text">
+         <string>Starfish</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
          <widget class="QLabel" name="label">
@@ -125,6 +160,9 @@
           </property>
           <property name="decimals">
            <number>1</number>
+          </property>
+          <property name="maximum">
+           <double>200.000000000000000</double>
           </property>
           <property name="singleStep">
            <double>0.100000000000000</double>

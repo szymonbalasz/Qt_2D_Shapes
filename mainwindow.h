@@ -39,6 +39,16 @@ private slots:
 
     void on_btnLineColor_clicked();
 
+    void on_btnCircle_clicked();
+
+    void on_btnEllipse_clicked();
+
+    void on_btnTwirly_clicked();
+
+    void on_btnStarfish_clicked();
+
+    void on_btnAnimate_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

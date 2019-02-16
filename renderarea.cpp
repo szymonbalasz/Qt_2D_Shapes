@@ -8,14 +8,14 @@ RenderArea::RenderArea(QWidget *parent) :
     mPen(Qt::white),
     mShape (Astroid)
 {
-    mPen.setWidth(2);
+    mPen.setWidth(3);
 
     on_shape_changed();
 }
 
 QSize RenderArea::minimumSizeHint() const
 {
-    return QSize(400, 400);
+    return QSize(600, 600);
 }
 
 QSize RenderArea::sizeHint() const
@@ -27,33 +27,57 @@ void RenderArea::on_shape_changed()
 {
     switch (mShape) {
     case Astroid:
-        mScale = 40;
+        mScale = 90;
         mIntervalLength = 2 * M_PI;
         mStepCount = 256;
         break;
 
     case Cycloid:
-        mScale = 4;
-        mIntervalLength = 6 * M_PI;
+        mScale = 10;
+        mIntervalLength = 4 * M_PI;
         mStepCount = 128;
         break;
 
     case HuygensCycloid:
-        mScale = 4;
+        mScale = 12;
         mIntervalLength = 4 * M_PI;
         mStepCount = 256;
         break;
 
     case HypoCycloid:
-        mScale = 15;
+        mScale = 40;
         mIntervalLength = 2 * M_PI;
         mStepCount = 256;
         break;
 
     case Line:
         mScale = 50;
-        mIntervalLength = 1;
+        mIntervalLength = 2;
         mStepCount = 128;
+        break;
+
+    case Circle:
+        mScale = 150;
+        mIntervalLength = 2 * M_PI;
+        mStepCount = 256;
+        break;
+
+    case Ellipse:
+        mScale = 75;
+        mIntervalLength = 2 * M_PI;
+        mStepCount = 256;
+        break;
+
+    case Twirly:
+        mScale = 12;
+        mIntervalLength = 12 * M_PI;
+        mStepCount = 512;
+        break;
+
+    case Starfish:
+        mScale = 35;
+        mIntervalLength = 6 * M_PI;
+        mStepCount = 256;
         break;
 
     default:
@@ -82,6 +106,22 @@ QPointF RenderArea::compute(float t)
 
     case Line:
         return compute_line(t);
+        break;
+
+    case Circle:
+        return compute_circle(t);
+        break;
+
+    case Ellipse:
+        return compute_ellipse(t);
+        break;
+
+    case Twirly:
+        return compute_twirly(t);
+        break;
+
+    case Starfish:
+        return compute_starfish(t);
         break;
 
     default:
@@ -124,7 +164,46 @@ QPointF RenderArea::compute_hypo(float t)
 
 QPointF RenderArea::compute_line(float t)
 {
-    return QPointF(1-t, 1-t);
+    return QPointF (1-t, 1-t);
+}
+
+QPointF RenderArea::compute_circle(float t)
+{
+    return QPointF (
+                cos(t),
+                sin(t)
+                );
+}
+
+QPointF RenderArea::compute_ellipse(float t)
+{
+    float a = 2;
+    float b = 1;
+    return QPointF (
+                a * cos(t),
+                b * sin(t)
+                );
+}
+
+QPointF RenderArea::compute_twirly(float t)
+{
+    float v1 = 11.0f;
+    float v2 = 6;
+
+    float x = v1 * cos(t) - 6 * cos((v1 / 6) * t);
+    float y = v1 * sin(t) - 6 * sin((v1 / 6) * t);
+    return QPointF (x, y);
+}
+
+QPointF RenderArea::compute_starfish(float t)
+{
+    float R = 5;
+    float r = 3;
+    float d = 5;
+    float x = (R - r) * cos(t) + d * cos(t * ((R - r) / r));
+    float y = (R - r) * sin(t) - d * sin(t * ((R - r) / r));
+
+    return QPointF (x, y);
 }
 
 void RenderArea::paintEvent(QPaintEvent *event)
@@ -155,10 +234,19 @@ void RenderArea::paintEvent(QPaintEvent *event)
         pixel.setX(point.x() * mScale + center.x());
         pixel.setY(point.y() * mScale + center.y());
 
-        //painter.drawPoint(pixel);
         painter.drawLine(pixel, prevPixel);
         prevPixel = pixel;
     }
+
+    //run function one more time to draw last line segment to complete shape
+
+    QPointF point = compute(mIntervalLength);
+
+    QPoint pixel;
+    pixel.setX(point.x() * mScale + center.x());
+    pixel.setY(point.y() * mScale + center.y());
+
+    painter.drawLine(pixel, prevPixel);
 
 }
 
