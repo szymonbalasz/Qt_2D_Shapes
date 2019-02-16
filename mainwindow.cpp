@@ -112,7 +112,7 @@ void MainWindow::on_btnAnimate_clicked()
     do {
         count += 0.02;
         this->ui->renderArea->setInterval(count);
-        update_ui();
+        this->ui->renderArea->repaint();
     } while ((this->ui->renderArea->interval()) < max);
 
 }
