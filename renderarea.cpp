@@ -4,7 +4,7 @@
 
 RenderArea::RenderArea(QWidget *parent) :
     QWidget(parent),
-    mBackgroundColor(0,0,255),
+    mBackgroundColor(112,112,112),
     mPen(Qt::white),
     mShape (Astroid)
 {
@@ -77,6 +77,12 @@ void RenderArea::on_shape_changed()
     case Starfish:
         mScale = 35;
         mIntervalLength = 6 * M_PI;
+        mStepCount = 128;
+        break;
+
+    case Cloud:
+        mScale = 14;
+        mIntervalLength = 28 * M_PI;
         mStepCount = 256;
         break;
 
@@ -123,6 +129,11 @@ QPointF RenderArea::compute(float t)
     case Starfish:
         return compute_starfish(t);
         break;
+
+    case Cloud:
+        return compute_cloud(t);
+        break;
+
 
     default:
         break;
@@ -202,6 +213,16 @@ QPointF RenderArea::compute_starfish(float t)
     float d = 5;
     float x = (R - r) * cos(t) + d * cos(t * ((R - r) / r));
     float y = (R - r) * sin(t) - d * sin(t * ((R - r) / r));
+
+    return QPointF (x, y);
+}
+
+QPointF RenderArea::compute_cloud(float t)
+{
+    float a = 14;
+    float b = 1;
+    float x = (a + b) * cos(t * b/a) - b * cos(t * (a+b)/a);
+    float y = (a + b) * sin(t * b/a) - b * sin(t * (a+b)/a);
 
     return QPointF (x, y);
 }

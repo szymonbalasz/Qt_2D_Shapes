@@ -23,6 +23,7 @@ public:
                     Ellipse,
                     Twirly,
                     Starfish,
+                    Cloud
                    };
 
     void setBackgroundColor (QColor color) {mBackgroundColor = color;}
@@ -62,7 +63,7 @@ private:
     QPointF compute_ellipse(float t);
     QPointF compute_twirly(float t);
     QPointF compute_starfish(float t);
-
+    QPointF compute_cloud(float t);
 
 
 private:
